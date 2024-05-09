@@ -9,7 +9,7 @@ const myServer = http.createServer((req, res) => {
   fs.appendFile("log.txt", log, (err, data) => {
     switch (myUrl.pathname) {
       case "/":
-        res.end("HomePage");
+        if (req.method === "GET") res.end("HomePage"); // HTTP Methods
         break;
       case "/about":
         const username = myUrl.query.myname;
@@ -18,6 +18,10 @@ const myServer = http.createServer((req, res) => {
       case "/search":
         const search = myUrl.query.search_query;
         res.end(`Here are your results of, ${search}`);
+        break;
+      case "/signup":
+        if (req.method === "GET") res.end("This is a signup Form"); // HTTP Methods
+        else if (req.method === "POST") res.end("Success"); // HTTP Methods
         break;
       case "/contact":
         res.end("Contact Us page");
